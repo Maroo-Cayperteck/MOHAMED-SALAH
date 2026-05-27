@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المستشار محمد صلاح — محامٍ ومستشار قانوني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --deep: #070b18;
+    --deep2: #0d1220;
+    --navy: #0f1628;
+    --indigo: #1a1f3a;
+    --violet: #6d28d9;
+    --violet-light: #8b5cf6;
+    --accent: #38bdf8;
+    --text: #e8e4dc;
+    --text-muted: rgba(232,228,220,0.55);
+    --border: rgba(201,168,76,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(7,11,24,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Amiri', serif; font-size: 1.35rem; color: var(--gold); letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  section { position: relative; z-index: 2; }
+
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { transform: translate(-50%,-50%) scale(1); opacity:0.8; }
+    50% { transform: translate(-50%,-50%) scale(1.12); opacity:1; }
+  }
+
+  .hero-rings { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+  .hero-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: ring-pulse 6s ease-in-out infinite;
+  }
+  .hero-ring:nth-child(1) { width: 340px; height: 340px; animation-delay: 0s; }
+  .hero-ring:nth-child(2) { width: 520px; height: 520px; animation-delay: 1.2s; border-color: rgba(201,168,76,0.08); }
+  .hero-ring:nth-child(3) { width: 700px; height: 700px; animation-delay: 2.4s; }
+  .hero-ring:nth-child(4) { width: 900px; height: 900px; animation-delay: 3.6s; border-color: rgba(201,168,76,0.05); }
+  @keyframes ring-pulse {
+    0%,100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.15; transform: translate(-50%,-50%) scale(1.04); }
+  }
+
+  .photo-wrapper {
+    position: relative;
+    width: 180px; height: 180px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.2s;
+  }
+  .photo-ring-gold {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(var(--gold), var(--gold-light), #b8860b, var(--gold-pale), var(--gold));
+    animation: spin 8s linear infinite;
+    padding: 3px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .photo-ring-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: var(--deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .photo-circle { width: 168px; height: 168px; border-radius: 50%; object-fit: cover; display: none; }
+  .photo-placeholder {
+    width: 168px; height: 168px;
+    border-radius: 50%;
+    background: var(--indigo);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+    gap: 8px;
+  }
+  .photo-placeholder:hover { background: #212650; }
+  .photo-placeholder i { font-size: 2.5rem; color: var(--gold); }
+  .photo-placeholder span { font-size: 0.72rem; color: var(--text-muted); }
+  .photo-upload-input { display: none; }
+
+  .badge-city {
+    position: absolute;
+    bottom: 4px; right: -8px;
+    background: var(--gold);
+    color: #1a0f00;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    white-space: nowrap;
+    box-shadow: 0 0 16px rgba(201,168,76,0.5);
+    z-index: 5;
+  }
+
+  .hero-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero-name {
+    font-family: 'Amiri', serif;
+    line-height: 1.3;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.7s;
+    margin-bottom: 0.4rem;
+  }
+  .name-first {
+    display: block;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #e8c97a 0%, #c9a84c 35%, #f5e9c8 60%, #c9a84c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200%;
+    animation: goldShimmer 4s ease infinite 1.5s;
+  }
+  @keyframes goldShimmer {
+    0%,100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .name-rest {
+    display: block;
+    font-size: clamp(1.2rem, 3vw, 1.9rem);
+    font-weight: 400;
+    color: rgba(232,228,220,0.8);
+    margin-top: 0.4rem;
+  }
+
+  .hero-divider {
+    width: 100px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.8rem auto;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+  .hero-tagline {
+    font-size: 1rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    max-width: 580px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.15s;
+  }
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.3s;
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #1a0f00;
+    border: none;
+    padding: 13px 32px;
+    border-radius: 50px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 24px rgba(201,168,76,0.3);
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 0 40px rgba(201,168,76,0.5); }
+  .btn-outline {
+    background: transparent;
+    color: var(--gold-light);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 13px 32px;
+    border-radius: 50px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); transform: translateY(-3px); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 2s;
+  }
+  .scroll-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: bounce 1.8s ease-in-out infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-title { font-family: 'Amiri', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--text); margin-bottom: 0.8rem; line-height: 1.3; }
+  .section-title span { color: var(--gold-light); }
+
+  #achievements { background: linear-gradient(180deg, var(--deep) 0%, var(--deep2) 100%); }
+  .ach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .ach-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: default;
+  }
+  .ach-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; }
+  .ach-card:hover::before { opacity: 1; }
+  .ach-card:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.45); box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.08); }
+  .ach-icon-wrap { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.5rem; position: relative; }
+  .ach-icon-wrap.gold { background: rgba(201,168,76,0.15); color: var(--gold-light); }
+  .ach-icon-wrap.violet { background: rgba(109,40,217,0.2); color: #a78bfa; }
+  .ach-icon-wrap.blue { background: rgba(56,189,248,0.15); color: var(--accent); }
+  .ach-icon-wrap.green { background: rgba(52,211,153,0.15); color: #34d399; }
+  .ach-icon-wrap.pink { background: rgba(244,114,182,0.15); color: #f472b6; }
+  .ach-icon-wrap.red { background: rgba(248,113,113,0.15); color: #f87171; }
+  .ach-number { font-family: 'Amiri', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.3rem; }
+  .ach-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
+  .ach-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+  .ach-tag { display: inline-block; margin-top: 1rem; padding: 4px 14px; border-radius: 50px; font-size: 0.72rem; font-weight: 600; background: rgba(201,168,76,0.12); color: var(--gold-light); border: 1px solid rgba(201,168,76,0.25); }
+
+  #intro-band { background: linear-gradient(135deg, var(--indigo) 0%, #0f1628 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .quote-block { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 5rem 2rem; max-width: 800px; margin: 0 auto; }
+  .quote-mark { font-family: 'Amiri', serif; font-size: 6rem; line-height: 0.5; color: var(--gold); opacity: 0.3; margin-bottom: 1.5rem; }
+  .quote-text { font-family: 'Amiri', serif; font-size: clamp(1.15rem, 2.5vw, 1.5rem); line-height: 1.9; color: var(--text); margin-bottom: 1.5rem; font-style: italic; }
+  .quote-src { font-size: 0.78rem; letter-spacing: 0.2em; color: var(--gold); }
+
+  #stats-band {
+    background: linear-gradient(135deg, var(--indigo), var(--navy));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+  @media (max-width: 700px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+  .stat-item h3 { font-family: 'Amiri', serif; font-size: 2.2rem; color: var(--gold-light); font-weight: 700; margin-bottom: 0.4rem; }
+  .stat-item p { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.1em; }
+
+  #cv-section { background: var(--deep2); }
+  .cv-container { margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  @media (max-width: 768px) { .cv-container { grid-template-columns: 1fr; gap: 2rem; } }
+  .cv-timeline { position: relative; padding-right: 2rem; }
+  .cv-timeline::before { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--gold), transparent); }
+  .cv-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-right: 2rem;
+  }
+  .cv-item::before {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 6px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--deep2);
+    box-shadow: 0 0 12px rgba(201,168,76,0.5);
+  }
+  .cv-year { font-size: 0.72rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.4rem; }
+  .cv-title { font-family: 'Amiri', serif; font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  .cv-org { font-size: 0.85rem; color: var(--gold-light); margin-bottom: 0.6rem; font-weight: 600; }
+  .cv-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; }
+  .cv-skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .cv-skill-item { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 12px; transition: all 0.3s; }
+  .cv-skill-item:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+  .cv-skill-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(201,168,76,0.12); display: flex; align-items: center; justify-content: center; color: var(--gold-light); font-size: 1.1rem; flex-shrink: 0; }
+  .cv-skill-text { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+  .cv-col-title { font-family: 'Amiri', serif; font-size: 1.5rem; color: var(--gold-light); margin-bottom: 2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+
+  #letters { background: var(--deep2); }
+  .letters-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 3rem; }
+  .letter-card {
+    background: rgba(255,255,255,0.02);
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.4s ease;
+  }
+  .letter-card:hover { transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,0.35); }
+  .letter-card.honor {
+    border-color: rgba(201,168,76,0.5);
+    background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(7,11,24,0.95) 60%);
+  }
+  .letter-card.honor::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  }
+  .letter-card.honor::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  }
+  .letter-card.gratitude { border-color: rgba(52,211,153,0.3); }
+  .letter-card.gratitude::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(52,211,153,0.7), transparent);
+  }
+  .letter-card.eid {
+    border-color: rgba(248,168,76,0.5);
+    background: linear-gradient(135deg, rgba(248,168,76,0.06) 0%, rgba(7,11,24,0.95) 60%);
+  }
+  .letter-card.eid::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, transparent, #f8a84c, #ffd700, #f8a84c, transparent);
+  }
+  .letter-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.8rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .letter-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .gold-icon { background: rgba(201,168,76,0.15); color: var(--gold-light); }
+  .green-icon { background: rgba(52,211,153,0.15); color: #34d399; }
+  .eid-icon { background: rgba(248,168,76,0.15); color: #f8a84c; }
+  .letter-header-text h4 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+  .letter-header-text span { font-size: 0.78rem; color: var(--text-muted); }
+  .letter-body p { font-size: 0.93rem; color: var(--text-muted); line-height: 1.95; margin-bottom: 1rem; font-family: 'Amiri', serif; }
+  .letter-body p:last-child { margin-bottom: 0; }
+  .letter-seal { margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.82rem; color: var(--gold); font-style: italic; text-align: right; }
+
+  .honor-cert-top { text-align: center; margin-bottom: 2rem; }
+  .honor-cert-title { font-family: 'Amiri', serif; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--gold); font-weight: 700; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+  .honor-cert-subtitle { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; }
+  .honor-cert-divider { width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.2rem auto; }
+  .honor-cert-name { font-family: 'Amiri', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; background: linear-gradient(135deg, #e8c97a, #c9a84c, #f5e9c8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 1rem 0; display: block; text-align: center; }
+  .honor-cert-seal-row { display: flex; justify-content: space-around; align-items: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(201,168,76,0.2); flex-wrap: wrap; gap: 1rem; }
+  .honor-seal-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .honor-seal-icon { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--gold); }
+  .honor-seal-label { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; }
+
+  /* ── EDIT SECTION ── */
+  #edit-section { background: var(--deep); }
+  .edit-panel { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; margin-top: 2.5rem; }
+  .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  @media (max-width: 600px) { .edit-grid { grid-template-columns: 1fr; } }
+  .edit-field label { display: block; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.6rem; text-transform: uppercase; }
+  .edit-field input, .edit-field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  .edit-field input:focus, .edit-field textarea:focus {
+    outline: none;
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 0 16px rgba(201,168,76,0.15);
+  }
+  .edit-field textarea { resize: vertical; min-height: 100px; }
+  .edit-buttons { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2.5rem; flex-wrap: wrap; }
+  .btn-save, .btn-cancel {
+    padding: 10px 28px;
+    border-radius: 50px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-save { background: var(--gold); color: #1a0f00; }
+  .btn-save:hover { transform: translateY(-2px); box-shadow: 0 0 24px rgba(201,168,76,0.4); }
+  .btn-cancel { background: transparent; color: var(--gold-light); border: 1px solid rgba(201,168,76,0.3); }
+  .btn-cancel:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+
+  footer {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  footer p { margin-bottom: 1rem; font-size: 0.85rem; }
+  .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
+  .social-links a { color: var(--gold); text-decoration: none; font-size: 1.1rem; transition: all 0.3s; }
+  .social-links a:hover { color: var(--gold-light); transform: translateY(-3px); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; gap: 1rem; }
+    .nav-links { gap: 1rem; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; gap: 1rem; }
+    .nav-links { flex-wrap: wrap; justify-content: center; }
+    .section-inner { padding: 3rem 1.5rem; }
+    .stats-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">المستشار محمد صلاح</div>
+  <ul class="nav-links">
+    <li><a href="#hero">الرئيسية</a></li>
+    <li><a href="#achievements">الإنجازات</a></li>
+    <li><a href="#cv-section">السيرة الذاتية</a></li>
+    <li><a href="#letters">الشهادات</a></li>
+    <li><a href="#edit-section">تعديل</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-rings">
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+  </div>
+
+  <div class="photo-wrapper">
+    <div class="photo-ring-gold">
+      <div class="photo-ring-inner">
+        <img id="photoCircle" class="photo-circle" src="" alt="صورة">
+        <div class="photo-placeholder" onclick="document.getElementById('photoUpload').click();">
+          <i class="fas fa-camera"></i>
+          <span>أضف صورة</span>
+        </div>
+      </div>
+    </div>
+    <div class="badge-city">القاهرة</div>
+  </div>
+
+  <div class="hero-tag">محامٍ متخصص ومستشار قانوني</div>
+
+  <h1 class="hero-name">
+    <span class="name-first">محمد</span>
+    <span class="name-rest">صلاح</span>
+  </h1>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-tagline">
+    خبرة عميقة في المجال القانوني والاستشارات القانونية المتخصصة. متفاني في تقديم أفضل الخدمات القانونية لعملائي.
+  </p>
+
+  <div class="hero-cta-group">
+    <button class="btn-gold" onclick="document.getElementById('contactForm').scrollIntoView({behavior: 'smooth'});">التواصل معي</button>
+    <button class="btn-outline" onclick="document.getElementById('cv-section').scrollIntoView({behavior: 'smooth'});">اعرف المزيد</button>
+  </div>
+
+  <div class="scroll-hint">
+    <span>اسحب للأسفل</span>
+    <div class="scroll-dot"></div>
+  </div>
+
+  <input type="file" id="photoUpload" class="photo-upload-input" accept="image/*">
+</section>
+
+<section id="achievements">
+  <div class="section-inner">
+    <div class="section-label">مميزات ومميزات</div>
+    <h2 class="section-title">الإنجازات <span>المهمة</span></h2>
+
+    <div class="ach-grid">
+      <div class="ach-card">
+        <div class="ach-icon-wrap gold"><i class="fas fa-trophy"></i></div>
+        <div class="ach-number">25+</div>
+        <h3>سنة خبرة</h3>
+        <p>أكثر من ربع قرن من الخبرة في العمل القانوني والاستشارات المتخصصة</p>
+        <span class="ach-tag">محترف</span>
+      </div>
+
+      <div class="ach-card">
+        <div class="ach-icon-wrap blue"><i class="fas fa-briefcase"></i></div>
+        <div class="ach-number">500+</div>
+        <h3>قضايا مُنجزة</h3>
+        <p>تمثيل ناجح في أكثر من خمسمائة قضية قانونية معقدة</p>
+        <span class="ach-tag">إنجاز</span>
+      </div>
+
+      <div class="ach-card">
+        <div class="ach-icon-wrap green"><i class="fas fa-star"></i></div>
+        <div class="ach-number">98%</div>
+        <h3>نسبة النجاح</h3>
+        <p>معدل نجاح عالي جداً في القضايا التي تم الدفاع عنها أمام المحاكم</p>
+        <span class="ach-tag">متميز</span>
+      </div>
+
+      <div class="ach-card">
+        <div class="ach-icon-wrap violet"><i class="fas fa-users"></i></div>
+        <div class="ach-number">1000+</div>
+        <h3>عملاء مرضيين</h3>
+        <p>خدمة آلاف العملاء برضاهم التام واعتمادهم المستمر</p>
+        <span class="ach-tag">ثقة</span>
+      </div>
+
+      <div class="ach-card">
+        <div class="ach-icon-wrap pink"><i class="fas fa-certificate"></i></div>
+        <div class="ach-number">15</div>
+        <h3>شهادة احترافية</h3>
+        <p>حاصل على شهادات عديدة في التخصصات القانونية المختلفة والدولية</p>
+        <span class="ach-tag">معتمد</span>
+      </div>
+
+      <div class="ach-card">
+        <div class="ach-icon-wrap red"><i class="fas fa-globe"></i></div>
+        <div class="ach-number">8</div>
+        <h3>دول عمل</h3>
+        <p>خبرة عملية في الأنظمة القانونية لثماني دول عربية وأجنبية</p>
+        <span class="ach-tag">دولي</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="intro-band">
+  <div class="quote-block">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">العدل أساس الملك، والقانون هو ضمان حقوق المواطنين وحماية مصالحهم</p>
+    <p class="quote-src">— المستشار محمد صلاح</p>
+  </div>
+</section>
+
+<section id="stats-band">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <h3>25+</h3>
+      <p>سنة خبرة</p>
+    </div>
+    <div class="stat-item">
+      <h3>500+</h3>
+      <p>قضية</p>
+    </div>
+    <div class="stat-item">
+      <h3>98%</h3>
+      <p>نسبة نجاح</p>
+    </div>
+    <div class="stat-item">
+      <h3>1000+</h3>
+      <p>عميل</p>
+    </div>
+  </div>
+</section>
+
+<section id="cv-section">
+  <div class="section-inner">
+    <div class="section-label">السيرة الذاتية</div>
+    <h2 class="section-title">الخبرة والتعليم</h2>
+
+    <div class="cv-container">
+      <div>
+        <h3 class="cv-col-title">الخبرة العملية</h3>
+        <div class="cv-timeline">
+          <div class="cv-item">
+            <div class="cv-year">2020 - الحالي</div>
+            <div class="cv-title">الشريك المؤسس</div>
+            <div class="cv-org">مكتب الاستشارات القانونية المتقدمة</div>
+            <div class="cv-desc">تأسيس وإدارة مكتب متخصص في الاستشارات القانونية والتقاضي</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-year">2015 - 2020</div>
+            <div class="cv-title">الشريك</div>
+            <div class="cv-org">مكتب البيان للاستشارات القانونية</div>
+            <div class="cv-desc">إدارة فريق متخصص في قضايا القانون المدني والتجاري</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-year">2010 - 2015</div>
+            <div class="cv-title">محامٍ محترف</div>
+            <div class="cv-org">نقابة المحامين بالقاهرة</div>
+            <div class="cv-desc">ممارسة العمل القانوني والدفاع عن الحقوق أمام المحاكم</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="cv-col-title">المؤهلات والتدريب</h3>
+        <div class="cv-timeline">
+          <div class="cv-item">
+            <div class="cv-year">2009</div>
+            <div class="cv-title">ماجستير القانون</div>
+            <div class="cv-org">جامعة القاهرة</div>
+            <div class="cv-desc">متخصص في القانون المدني والتجاري</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-year">2004</div>
+            <div class="cv-title">بكالوريوس الحقوق</div>
+            <div class="cv-org">جامعة عين شمس</div>
+            <div class="cv-desc">الحاصل على درجة امتياز مع مرتبة الشرف</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-year">2018 - 2019</div>
+            <div class="cv-title">دورات تدريبية دولية</div>
+            <div class="cv-org">معاهد قانونية عالمية</div>
+            <div class="cv-desc">تدريب متقدم في القانون الدولي والعقود الدولية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-skills-grid" style="margin-top: 4rem;">
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-gavel"></i></div>
+        <div class="cv-skill-text">القانون المدني</div>
+      </div>
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-exchange-alt"></i></div>
+        <div class="cv-skill-text">القانون التجاري</div>
+      </div>
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-landmark"></i></div>
+        <div class="cv-skill-text">القانون الدستوري</div>
+      </div>
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-handshake"></i></div>
+        <div class="cv-skill-text">القانون الدولي</div>
+      </div>
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-file-contract"></i></div>
+        <div class="cv-skill-text">صياغة العقود</div>
+      </div>
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-balance-scale"></i></div>
+        <div class="cv-skill-text">التقاضي</div>
+      </div>
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-medkit"></i></div>
+        <div class="cv-skill-text">القانون الإداري</div>
+      </div>
+      <div class="cv-skill-item">
+        <div class="cv-skill-icon"><i class="fas fa-home"></i></div>
+        <div class="cv-skill-text">قانون الملكية</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="letters">
+  <div class="section-inner">
+    <div class="section-label">الشهادات والتكريمات</div>
+    <h2 class="section-title">التقديرات <span>المهنية</span></h2>
+
+    <div class="letters-grid">
+      <div class="letter-card honor">
+        <div class="honor-cert-top">
+          <div class="honor-cert-title">شهادة تقدير</div>
+          <div class="honor-cert-subtitle">تكريم مهني</div>
+          <div class="honor-cert-divider"></div>
+        </div>
+        <div class="honor-cert-name">محمد صلاح</div>
+        <div class="letter-body">
+          <p>تقدر نقابة المحامين بالقاهرة المساهمة البارزة للمستشار محمد صلاح في مجال الاستشارات القانونية والدفاع عن حقوق الموكلين بكل جدية واحترافية.</p>
+          <p>لعمله المتميز وإسهاماته الفعالة في تطوير المهنة القانونية وتقدمها.</p>
+        </div>
+        <div class="honor-cert-seal-row">
+          <div class="honor-seal-item">
+            <div class="honor-seal-icon"><i class="fas fa-stamp"></i></div>
+            <div class="honor-seal-label">الختم الرسمي</div>
+          </div>
+          <div class="honor-seal-item">
+            <div class="honor-seal-icon"><i class="fas fa-crown"></i></div>
+            <div class="honor-seal-label">2024</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="letter-card gratitude">
+        <div class="letter-header">
+          <div class="letter-icon green-icon"><i class="fas fa-heart"></i></div>
+          <div class="letter-header-text">
+            <h4>رسالة شكر وتقدير</h4>
+            <span>من عميل صديق</span>
+          </div>
+        </div>
+        <div class="letter-body">
+          <p>أتمنى أن تقبل خالص شكري وتقديري على المجهودات المتميزة والاستشارات القيمة التي قدمتها لي. كان دعمك وخبرتك حاسماً في حل قضيتي.</p>
+          <p>أثبت احترافيتك وتفانيك في العمل أنك من أفضل المستشارين القانونيين في مصر.</p>
+        </div>
+        <div class="letter-seal">مع أطيب التمنيات بالمزيد من التقدم والنجاح</div>
+      </div>
+
+      <div class="letter-card eid">
+        <div class="letter-header">
+          <div class="letter-icon eid-icon"><i class="fas fa-moon"></i></div>
+          <div class="letter-header-text">
+            <h4>تهنئة خاصة</h4>
+            <span>بمناسبة شهر رمضان</span>
+          </div>
+        </div>
+        <div class="letter-body">
+          <p>كل عام وأنت بألف خير وسعادة. أتمنى أن يحمل هذا الشهر الفضيل لك ولعائلتك الكريمة كل الخير والبركة.</p>
+          <p>متمنياً لك عاماً حافلاً بالإنجازات والنجاحات المتواصلة في عملك ومسيرتك المهنية المميزة.</p>
+        </div>
+        <div class="letter-seal">كل عام وأنتم بألف خير</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="edit-section">
+  <div class="section-inner">
+    <div class="section-label">لوحة التحكم</div>
+    <h2 class="section-title">تعديل البيانات</h2>
+
+    <div class="edit-panel" id="contactForm">
+      <div class="edit-grid">
+        <div class="edit-field">
+          <label for="editName">الاسم الكامل</label>
+          <input type="text" id="editName" value="محمد صلاح" placeholder="أدخل الاسم الكامل">
+        </div>
+        <div class="edit-field">
+          <label for="editCity">المدينة</label>
+          <input type="text" id="editCity" value="القاهرة" placeholder="أدخل المدينة">
+        </div>
+      </div>
+
+      <div class="edit-grid">
+        <div class="edit-field">
+          <label for="editTitle">الوظيفة</label>
+          <input type="text" id="editTitle" value="محامٍ ومستشار قانوني" placeholder="أدخل الوظيفة">
+        </div>
+        <div class="edit-field">
+          <label for="editPhone">رقم الهاتف</label>
+          <input type="tel" id="editPhone" value="+201234567890" placeholder="أدخل رقم الهاتف">
+        </div>
+      </div>
+
+      <div class="edit-grid">
+        <div class="edit-field">
+          <label for="editEmail">البريد الإلكتروني</label>
+          <input type="email" id="editEmail" value="info@mohamedsalah.law" placeholder="أدخل البريد الإلكتروني">
+        </div>
+        <div class="edit-field">
+          <label for="editLocation">المكتب</label>
+          <input type="text" id="editLocation" value="شارع النيل، القاهرة" placeholder="أدخل عنوان المكتب">
+        </div>
+      </div>
+
+      <div class="edit-field">
+        <label for="editTagline">الوصف القصير</label>
+        <textarea id="editTagline" placeholder="أدخل وصفاً قصيراً عن نفسك">خبرة عميقة في المجال القانوني والاستشارات القانونية المتخصصة. متفاني في تقديم أفضل الخدمات القانونية لعملائي.</textarea>
+      </div>
+
+      <div class="edit-buttons">
+        <button class="btn-save" onclick="saveChanges();">حفظ التعديلات</button>
+        <button class="btn-cancel" onclick="resetForm();">إلغاء</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2024 المستشار محمد صلاح. جميع الحقوق محفوظة.</p>
+  <p>مكتب الاستشارات القانونية المتقدمة</p>
+  <div class="social-links">
+    <a href="#" title="فيسبوك"><i class="fab fa-facebook"></i></a>
+    <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
+    <a href="#" title="لينكد إن"><i class="fab fa-linkedin"></i></a>
+    <a href="#" title="إنستجرام"><i class="fab fa-instagram"></i></a>
+  </div>
+</footer>
+
+<script>
+  // معالجة تحميل الصورة
+  document.getElementById('photoUpload').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = document.getElementById('photoCircle');
+        img.src = event.target.result;
+        img.style.display = 'block';
+        document.querySelector('.photo-placeholder').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // حفظ التعديلات
+  function saveChanges() {
+    const name = document.getElementById('editName').value;
+    const city = document.getElementById('editCity').value;
+    const title = document.getElementById('editTitle').value;
+    const tagline = document.getElementById('editTagline').value;
+    const phone = document.getElementById('editPhone').value;
+    const email = document.getElementById('editEmail').value;
+
+    // تحديث الصفحة
+    document.querySelector('.name-first').textContent = name.split(' ')[0];
+    document.querySelector('.name-rest').textContent = name.split(' ').slice(1).join(' ');
+    document.querySelector('.badge-city').textContent = city;
+    document.querySelector('.hero-tag').textContent = title;
+    document.querySelector('.hero-tagline').textContent = tagline;
+
+    alert('تم حفظ التعديلات بنجاح!');
+  }
+
+  // إعادة تعيين النموذج
+  function resetForm() {
+    document.getElementById('editName').value = 'محمد صلاح';
+    document.getElementById('editCity').value = 'القاهرة';
+    document.getElementById('editTitle').value = 'محامٍ ومستشار قانوني';
+    document.getElementById('editTagline').value = 'خبرة عميقة في المجال القانوني والاستشارات القانونية المتخصصة. متفاني في تقديم أفضل الخدمات القانونية لعملائي.';
+    document.getElementById('editPhone').value = '+201234567890';
+    document.getElementById('editEmail').value = 'info@mohamedsalah.law';
+    document.getElementById('editLocation').value = 'شارع النيل، القاهرة';
+  }
+
+  // إضافة تأثير تمرير سلس للروابط
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // تأثير التحميل
+  window.addEventListener('load', function() {
+    document.body.style.opacity = '1';
+  });
+</script>
+
+</body>
+</html>
